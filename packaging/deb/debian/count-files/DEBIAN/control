@@ -1,0 +1,13 @@
+Package: count-files
+Version: 1.0-1
+Architecture: all
+Maintainer: vboxuser <romachaliy14@gmail.com>
+Installed-Size: 14
+Depends: bash, coreutils, findutils
+Section: utils
+Priority: optional
+Homepage: https://github.com/roma4aliy/linux-lab-scripts
+Description: Script to count reqular files in /etc
+ A Bash scripts that counts the number of reqular files
+ in the /etc directory, excluding directories and
+ symbolic links.

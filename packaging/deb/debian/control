@@ -1,0 +1,18 @@
+Source: count-files
+Section: utils
+Priority: optional
+Maintainer: vboxuser <romachaliy14@gmail.com>
+Rules-Requires-Root: no
+Build-Depends: debhelper-compat (= 13),
+Standards-Version: 4.7.2
+Homepage: https://github.com/roma4aliy/linux-lab-scripts
+#Vcs-Browser: https://salsa.debian.org/debian/count-files
+#Vcs-Git: https://salsa.debian.org/debian/count-files.git
+
+Package: count-files
+Architecture: all
+Depends: ${misc:Depends}, bash, coreutils, findutils
+Description: Script to count reqular files in /etc
+ A Bash scripts that counts the number of reqular files
+ in the /etc directory, excluding directories and
+ symbolic links.
