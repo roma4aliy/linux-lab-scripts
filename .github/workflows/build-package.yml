@@ -53,7 +53,7 @@ jobs:
       - name: Prepare build directory
         run: |
           mkdir -p build/count-files-1.0
-          cp count_files.sh build/count-files-1.0/
+          cp count_files build/count-files-1.0/
           cp -r packaging/deb/debian build/count-files-1.0/
 
       - name: Build DEB

@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        Script to count regular files in /etc
 
 License:        MIT
-URL:            https://github.com/USERNAME/linux-lab-scripts
+URL:            https://github.com/roma4aliy/linux-lab-scripts
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 Requires:       bash
@@ -20,7 +20,7 @@ in the /etc directory, excluding directories and symbolic links.
 
 %install
 mkdir -p %{buildroot}%{_bindir}
-install -m 755 count_files.sh %{buildroot}%{_bindir}/count_files
+install -m 755 count_files %{buildroot}%{_bindir}/count_files
 
 %files
 %{_bindir}/count_files
