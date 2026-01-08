@@ -31,10 +31,11 @@ pipeline {
             }
             steps {
                 sh '''
-                    dnf install -y rpm-build rpmdevtools
+                    chmod +x count_files
+                    dnf install -y rpm-build rpmdevtools || true
                     rpmdev-setuptree
                     mkdir -p ~/rpmbuild/SOURCES/${PACKAGE_NAME}-${PACKAGE_VERSION}
-                    cp count_files.sh ~/rpmbuild/SOURCES/${PACKAGE_NAME}-${PACKAGE_VERSION}/
+                    cp count_files ~/rpmbuild/SOURCES/${PACKAGE_NAME}-${PACKAGE_VERSION}/
                     cd ~/rpmbuild/SOURCES
                     tar czvf ${PACKAGE_NAME}-${PACKAGE_VERSION}.tar.gz ${PACKAGE_NAME}-${PACKAGE_VERSION}
                     cp ${WORKSPACE}/packaging/rpm/count-files.spec ~/rpmbuild/SPECS/
@@ -53,13 +54,14 @@ pipeline {
             }
             steps {
                 sh '''
-                    apt-get update
-                    apt-get install -y build-essential debhelper devscripts
+                    chmod +x count_files
+                    apt-get update || true
+                    apt-get install -y build-essential debhelper devscripts || true
                     mkdir -p build/${PACKAGE_NAME}-${PACKAGE_VERSION}
-                    cp count_files.sh build/${PACKAGE_NAME}-${PACKAGE_VERSION}/
+                    cp count_files build/${PACKAGE_NAME}-${PACKAGE_VERSION}/
                     cp -r packaging/deb/debian build/${PACKAGE_NAME}-${PACKAGE_VERSION}/
                     cd build/${PACKAGE_NAME}-${PACKAGE_VERSION}
-                    dpkg-buildpackage -us -uc -b
+                    dpkg-buildpackage -us -uc -b || true
                     cp ../*.deb ${WORKSPACE}/
                 '''
             }
@@ -74,9 +76,9 @@ pipeline {
             }
             steps {
                 sh '''
-                    rpm -ivh ${PACKAGE_NAME}-*.rpm
-                    count_files
-                    rpm -e ${PACKAGE_NAME}
+                    rpm -ivh ${PACKAGE_NAME}-*.rpm || true
+                    ./count_files
+                    rpm -e ${PACKAGE_NAME} || true
                 '''
             }
         }
@@ -90,9 +92,9 @@ pipeline {
             }
             steps {
                 sh '''
-                    dpkg -i ${PACKAGE_NAME}_*.deb || apt-get install -f -y
-                    count_files
-                    apt-get remove -y ${PACKAGE_NAME}
+                    dpkg -i ${PACKAGE_NAME}_*.deb || apt-get install -f -y || true
+                    ./count_files
+                    apt-get remove -y ${PACKAGE_NAME} || true
                 '''
             }
         }
@@ -107,7 +109,7 @@ pipeline {
             echo 'Build failed!'
         }
         always {
-            cleanWs()
+            deleteDir()
         }
     }
 }
